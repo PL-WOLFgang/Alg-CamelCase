@@ -1,0 +1,36 @@
+Pattern pattern = Pattern.compile("[A-Z0-9]");
+Matcher matcher = pattern.matcher(word);
+Matcher matcher2 = null;
+
+ArrayList<String> palavras = new  ArrayList<String>();
+
+int ultimo = 0; 
+
+while (matcher.find()) {
+	
+	if(matcher.start() != 0){
+		if(matcher.start()+1 < word.length() ){					
+			
+			matcher2 = pattern.matcher(word.substring(matcher.start()+1, matcher.start()+2));
+			if(!matcher2.matches()){
+				
+				palavras.add(word.substring(ultimo, matcher.start()));
+				ultimo = matcher.start();
+				
+			}else{						
+				
+				matcher2 = pattern.matcher(word.substring(matcher.start()-1, matcher.start()));
+				
+				if(!matcher2.matches()){
+					
+					palavras.add(word.substring(ultimo, matcher.start()));
+					ultimo = matcher.start();
+				}
+			}
+		}else{
+			
+			palavras.add(word.substring(ultimo, matcher.start()+1));
+			ultimo = matcher.start();
+		}
+	}			
+}
